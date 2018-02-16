@@ -2,6 +2,7 @@ package com.propertyfinder.testapplication.property_list;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
@@ -18,20 +19,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PropertyListActivity extends AppCompatActivity {
-
-
-    Call<PropertyList> propCall;
-
-    private PropertyListActivityComponent component;
-
     @BindView(R.id.rcvList)
     RecyclerView recyclerView;
 
+    Call<PropertyList> propCall;
+    private PropertyListActivityComponent component;
+
     @Inject
     PropertyService propertyService;
-
-//    @Inject
-//    PropertyAdapter propertyAdapter;
+    @Inject
+    PropertyAdapter propertyAdapter;
+    @Inject
+    RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +45,14 @@ public class PropertyListActivity extends AppCompatActivity {
 
         component.injectPropListActivity(this);
 
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(propertyAdapter);
+
         propCall = propertyService.getPropertyList(null, 0);
         propCall.enqueue(new Callback<PropertyList>() {
             @Override
             public void onResponse(Call<PropertyList> call, Response<PropertyList> response) {
-//                propertyAdapter.populate(response.body().getmResult());
+                propertyAdapter.populate(response.body().getmResult());
             }
 
             @Override

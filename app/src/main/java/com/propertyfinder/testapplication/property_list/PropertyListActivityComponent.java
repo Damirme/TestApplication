@@ -8,5 +8,4 @@ import dagger.Component;
 @Component(modules = PropertyListActivityModule.class, dependencies = MyApplicationComponent.class)
 public interface PropertyListActivityComponent {
     void injectPropListActivity(PropertyListActivity propListActivity);
-
 }
