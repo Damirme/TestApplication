@@ -1,8 +1,7 @@
 package com.propertyfinder.testapplication.core;
 
-/**
- * Created by DamirMailybayev on 2/16/18.
- */
+import com.propertyfinder.testapplication.BuildConfig;
 
 public class Constants {
+    public static String BASE_URL = BuildConfig.BASE_URL;
 }

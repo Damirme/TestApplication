@@ -1,12 +1,9 @@
-package com.propertyfinder.testapplication.property_list.item;
+package com.propertyfinder.testapplication.property_list;
 
 import com.google.gson.annotations.SerializedName;
+import com.propertyfinder.testapplication.property_list.item.Property;
 
 import java.util.List;
-
-/**
- * Created by DamirMailybayev on 2/17/18.
- */
 
 public class PropertyList {
 

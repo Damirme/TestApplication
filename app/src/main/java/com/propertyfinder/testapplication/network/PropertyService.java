@@ -1,8 +1,16 @@
 package com.propertyfinder.testapplication.network;
 
-/**
- * Created by DamirMailybayev on 2/17/18.
- */
+import com.propertyfinder.testapplication.property_list.PropertyList;
 
-public class PropertyService {
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+
+public interface PropertyService {
+    @GET("mobileapi")
+    Call<PropertyList> getPropertyList(
+            @Query("order") String order,
+            @Query("page") int pageNumber
+    );
 }

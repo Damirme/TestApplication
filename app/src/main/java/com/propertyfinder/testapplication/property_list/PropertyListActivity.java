@@ -17,12 +17,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PropListActivity extends AppCompatActivity {
+public class PropertyListActivity extends AppCompatActivity {
 
 
     Call<PropertyList> propCall;
 
-    private PropListActivityComponent component;
+    private PropertyListActivityComponent component;
 
     @BindView(R.id.rcvList)
     RecyclerView recyclerView;
@@ -30,8 +30,8 @@ public class PropListActivity extends AppCompatActivity {
     @Inject
     PropertyService propertyService;
 
-    @Inject
-    PropertyAdapter propertyAdapter;
+//    @Inject
+//    PropertyAdapter propertyAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +39,9 @@ public class PropListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_prop_list);
         ButterKnife.bind(this);
 
-        component = DaggerPropListActivityComponent.builder()
+        component = DaggerPropertyListActivityComponent.builder()
                 .myApplicationComponent(MyApplication.get(this).component())
-                .propertyModule(new PropertyModule(this))
+                .propertyListActivityModule( new PropertyListActivityModule(this))
                 .build();
 
         component.injectPropListActivity(this);
@@ -50,7 +50,7 @@ public class PropListActivity extends AppCompatActivity {
         propCall.enqueue(new Callback<PropertyList>() {
             @Override
             public void onResponse(Call<PropertyList> call, Response<PropertyList> response) {
-                propertyAdapter.populate(response.body().getmResult());
+//                propertyAdapter.populate(response.body().getmResult());
             }
 
             @Override

@@ -1,8 +1,7 @@
 package com.propertyfinder.testapplication.property_list;
 
-/**
- * Created by DamirMailybayev on 2/16/18.
- */
+import javax.inject.Scope;
 
-public class PropertyListActivityScope {
+@Scope
+public @interface PropertyListActivityScope {
 }

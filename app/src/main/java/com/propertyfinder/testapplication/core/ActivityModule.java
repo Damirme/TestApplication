@@ -1,7 +1,9 @@
-package com.twistedeqations.dagger2tutorial;
+package com.propertyfinder.testapplication.core;
 
 import android.app.Activity;
 import android.content.Context;
+
+import com.propertyfinder.testapplication.application.MyApplicationScope;
 
 import javax.inject.Named;
 
@@ -18,7 +20,7 @@ public class ActivityModule {
     }
 
     @Provides
-    @GithubApplicationScope
+    @MyApplicationScope
     @Named("activity_context")
     public Context context() {
         return context;
