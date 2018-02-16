@@ -20,4 +20,6 @@ import dagger.android.support.DaggerApplication;
 public interface MyApplicationComponent {
 
     PropertyService getPropertyService();
+
+    Picasso getPicasso();
 }
