@@ -1,6 +1,6 @@
-package com.propertyfinder.testapplication.property_list;
+package com.propertyfinder.testapplication.features.property_list;
 
-import com.propertyfinder.testapplication.application.MyApplicationComponent;
+import com.propertyfinder.testapplication.core.application.MyApplicationComponent;
 
 import dagger.Component;
 

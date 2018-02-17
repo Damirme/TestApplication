@@ -1,10 +1,10 @@
 
-package com.propertyfinder.testapplication.property_list.item;
+package com.propertyfinder.testapplication.data.api.response;
 
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class Broker {
+public class BrokerResponse {
 
     @SerializedName("address")
     private String mAddress;

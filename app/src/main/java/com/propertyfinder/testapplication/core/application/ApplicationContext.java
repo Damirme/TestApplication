@@ -1,4 +1,4 @@
-package com.propertyfinder.testapplication.application;
+package com.propertyfinder.testapplication.core.application;
 
 import javax.inject.Qualifier;
 

@@ -1,7 +1,7 @@
-package com.propertyfinder.testapplication.network;
+package com.propertyfinder.testapplication.core.network;
 
-import com.propertyfinder.testapplication.application.MyApplicationScope;
-import com.propertyfinder.testapplication.property_list.PropertyListActivityScope;
+import com.propertyfinder.testapplication.core.application.MyApplicationScope;
+import com.propertyfinder.testapplication.features.property_list.PropertyListActivityScope;
 
 import dagger.Module;
 import dagger.Provides;

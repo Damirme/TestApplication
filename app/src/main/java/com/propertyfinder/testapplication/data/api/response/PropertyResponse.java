@@ -1,10 +1,10 @@
 
-package com.propertyfinder.testapplication.property_list.item;
+package com.propertyfinder.testapplication.data.api.response;
 
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class Property {
+public class PropertyResponse {
 
     @SerializedName("agent_license")
     private String mAgentLicense;
@@ -17,11 +17,11 @@ public class Property {
     @SerializedName("area")
     private String mArea;
     @SerializedName("bathrooms")
-    private long mBathrooms;
+    private int mBathrooms;
     @SerializedName("bedrooms")
-    private long mBedrooms;
+    private int mBedrooms;
     @SerializedName("broker")
-    private Broker mBroker;
+    private BrokerResponse mBroker;
     @SerializedName("broker_name")
     private String mBrokerName;
     @SerializedName("category_id")
@@ -39,7 +39,7 @@ public class Property {
     @SerializedName("id")
     private long mId;
     @SerializedName("image_count")
-    private long mImageCount;
+    private int mImageCount;
     @SerializedName("lat")
     private double mLat;
     @SerializedName("location")
@@ -121,27 +121,27 @@ public class Property {
         mArea = area;
     }
 
-    public long getBathrooms() {
+    public int getBathrooms() {
         return mBathrooms;
     }
 
-    public void setBathrooms(long bathrooms) {
+    public void setBathrooms(int bathrooms) {
         mBathrooms = bathrooms;
     }
 
-    public long getBedrooms() {
+    public int getBedrooms() {
         return mBedrooms;
     }
 
-    public void setBedrooms(long bedrooms) {
+    public void setBedrooms(int bedrooms) {
         mBedrooms = bedrooms;
     }
 
-    public Broker getBroker() {
+    public BrokerResponse getBroker() {
         return mBroker;
     }
 
-    public void setBroker(Broker broker) {
+    public void setBroker(BrokerResponse broker) {
         mBroker = broker;
     }
 
@@ -213,7 +213,7 @@ public class Property {
         return mImageCount;
     }
 
-    public void setImageCount(long imageCount) {
+    public void setImageCount(int imageCount) {
         mImageCount = imageCount;
     }
 

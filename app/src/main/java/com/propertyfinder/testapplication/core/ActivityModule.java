@@ -3,7 +3,7 @@ package com.propertyfinder.testapplication.core;
 import android.app.Activity;
 import android.content.Context;
 
-import com.propertyfinder.testapplication.application.MyApplicationScope;
+import com.propertyfinder.testapplication.core.application.MyApplicationScope;
 
 import javax.inject.Named;
 

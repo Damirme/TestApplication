@@ -1,4 +1,4 @@
-package com.propertyfinder.testapplication.application;
+package com.propertyfinder.testapplication.core.application;
 
 import android.app.Activity;
 import android.app.Application;
@@ -7,10 +7,6 @@ import com.propertyfinder.testapplication.core.ContextModule;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
-
-import dagger.android.AndroidInjector;
-import dagger.android.DaggerApplication;
-import okhttp3.OkHttpClient;
 
 public class MyApplication extends Application {
 

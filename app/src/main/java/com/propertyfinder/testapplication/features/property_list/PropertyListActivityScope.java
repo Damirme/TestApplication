@@ -1,4 +1,4 @@
-package com.propertyfinder.testapplication.property_list;
+package com.propertyfinder.testapplication.features.property_list;
 
 import javax.inject.Scope;
 

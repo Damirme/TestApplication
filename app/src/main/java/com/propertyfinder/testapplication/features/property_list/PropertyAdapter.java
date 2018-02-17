@@ -1,14 +1,12 @@
-package com.propertyfinder.testapplication.property_list;
+package com.propertyfinder.testapplication.features.property_list;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.propertyfinder.testapplication.R;
-import com.propertyfinder.testapplication.property_list.item.Property;
-import com.propertyfinder.testapplication.property_list.item.PropertyViewHolder;
+import com.propertyfinder.testapplication.data.api.response.PropertyResponse;
+import com.propertyfinder.testapplication.data.model.Property;
+import com.propertyfinder.testapplication.features.property_list.item.PropertyViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,7 +43,7 @@ public class PropertyAdapter extends RecyclerView.Adapter {
         return list.size();
     }
 
-    public void populate(List<Property> properties) {
+    public void setList(List<Property> properties) {
         list = properties;
         notifyDataSetChanged();
     }

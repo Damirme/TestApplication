@@ -1,12 +1,10 @@
-package com.propertyfinder.testapplication.property_list;
+package com.propertyfinder.testapplication.features.property_list;
 
-import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
-import javax.inject.Inject;
+import com.propertyfinder.testapplication.core.network.PropertyService;
+import com.propertyfinder.testapplication.data.api.PropertyDataManager;
 
 import dagger.Module;
 import dagger.Provides;
@@ -31,6 +29,12 @@ public class PropertyListActivityModule {
     @PropertyListActivityScope
     public RecyclerView.LayoutManager layoutManager(PropertyListActivity context){
         return new LinearLayoutManager(context);
+    }
+
+    @Provides
+    @PropertyListActivityScope
+    public PropertyDataManager propertyDataManager(PropertyService propertyService){
+        return new PropertyDataManager(propertyService);
     }
 
 }

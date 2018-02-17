@@ -1,7 +1,6 @@
-package com.propertyfinder.testapplication.property_list;
+package com.propertyfinder.testapplication.data.api.response;
 
 import com.google.gson.annotations.SerializedName;
-import com.propertyfinder.testapplication.property_list.item.Property;
 
 import java.util.List;
 
@@ -11,13 +10,13 @@ public class PropertyList {
     int mTotal;
 
     @SerializedName("res")
-    List<Property> mResult;
+    List<PropertyResponse> mResult;
 
-    public int getmTotal() {
+    public int getTotal() {
         return mTotal;
     }
 
-    public List<Property> getmResult() {
+    public List<PropertyResponse> getResult() {
         return mResult;
     }
 }

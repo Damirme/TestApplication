@@ -1,13 +1,13 @@
-package com.propertyfinder.testapplication.property_list.item;
+package com.propertyfinder.testapplication.features.property_list.item;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.propertyfinder.testapplication.R;
+import com.propertyfinder.testapplication.data.model.Property;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -30,9 +30,9 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Property property, Picasso picasso) {
-        picasso.load(property.getThumbnail())
+        picasso.load(property.imageUrl)
                 .into(imvProperty);
-        txvBathCount.setText(property.getBathrooms() + "");
-        txvRoomCount.setText(property.getBedrooms() + "");
+        txvBathCount.setText(imvProperty.getContext().getString(R.string.property_item_bathroom_count, property.bathroomCount));
+        txvRoomCount.setText(imvProperty.getContext().getString(R.string.property_item_bedroom_count, property.bedroomCount));
     }
 }

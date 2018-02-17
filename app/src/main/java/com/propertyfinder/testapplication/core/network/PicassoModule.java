@@ -1,9 +1,9 @@
-package com.propertyfinder.testapplication.network;
+package com.propertyfinder.testapplication.core.network;
 
 import android.content.Context;
 
-import com.propertyfinder.testapplication.application.ApplicationContext;
-import com.propertyfinder.testapplication.application.MyApplicationScope;
+import com.propertyfinder.testapplication.core.application.ApplicationContext;
+import com.propertyfinder.testapplication.core.application.MyApplicationScope;
 import com.propertyfinder.testapplication.core.ContextModule;
 import com.squareup.picasso.Picasso;
 
