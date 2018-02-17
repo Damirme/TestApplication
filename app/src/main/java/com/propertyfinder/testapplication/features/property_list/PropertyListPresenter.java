@@ -3,6 +3,7 @@ package com.propertyfinder.testapplication.features.property_list;
 import com.google.common.collect.ImmutableList;
 import com.propertyfinder.testapplication.data.api.PropertyDataManager;
 import com.propertyfinder.testapplication.data.model.Property;
+import com.propertyfinder.testapplication.data.model.SortType;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -13,14 +14,23 @@ public class PropertyListPresenter {
     private PropertyDataManager propertyDataManager;
 
     public PropertyListPresenter(PropertyListActivity propertyListActivity,
-                                             PropertyDataManager propertyDataManager) {
+                                 PropertyDataManager propertyDataManager) {
         this.propertyListActivity = propertyListActivity;
         this.propertyDataManager = propertyDataManager;
     }
 
     public void loadProperty() {
+        loadProperty(null, 0);
+    }
+
+    public void loadProperty(SortType sortType) {
+        loadProperty(sortType.getCode(), 0);
+    }
+
+
+    private void loadProperty(String order, int pageNumber) {
         propertyListActivity.showLoading(true);
-        propertyDataManager.getUsersRepositories(null, 0)
+        propertyDataManager.getUsersRepositories(order, pageNumber)
                 .subscribe(new Observer<ImmutableList<Property>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -44,6 +54,9 @@ public class PropertyListPresenter {
                         propertyListActivity.showLoading(false);
                     }
                 });
+    }
 
+    public void clickSort() {
+        propertyListActivity.showSortDialog();
     }
 }

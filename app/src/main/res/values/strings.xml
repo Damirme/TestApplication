@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">TestApplication</string>
     <string name="errorOccured">Something went wrong. Please try again later</string>
-    <string name="property_item_bathroom_count">$1%d Bathroms</string>
-    <string name="property_item_bedroom_count">$1%d Bedrooms</string>
+    <string name="property_item_bathroom_count">%1$d Bathroms</string>
+    <string name="property_item_bedroom_count">%1$d Bedrooms</string>
+    <string name="choose_sort_type">Sort by</string>
+    <string name="sort_pd">Price Decending</string>
+    <string name="sort_pa">Price Accending</string>
+    <string name="sort_bd">Bedroom Decending</string>
+    <string name="sort_ba">Bedroom Accending</string>
 </resources>

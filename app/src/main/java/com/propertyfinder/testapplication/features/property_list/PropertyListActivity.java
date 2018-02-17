@@ -1,6 +1,9 @@
 package com.propertyfinder.testapplication.features.property_list;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -8,20 +11,14 @@ import com.google.common.collect.ImmutableList;
 import com.propertyfinder.testapplication.R;
 import com.propertyfinder.testapplication.core.BaseActivity;
 import com.propertyfinder.testapplication.core.application.MyApplication;
-import com.propertyfinder.testapplication.core.network.PropertyService;
-import com.propertyfinder.testapplication.data.api.PropertyDataManager;
-import com.propertyfinder.testapplication.data.api.response.PropertyList;
-import com.propertyfinder.testapplication.data.api.response.PropertyResponse;
 import com.propertyfinder.testapplication.data.model.Property;
-
-import java.util.List;
+import com.propertyfinder.testapplication.features.property_list.sorting.AlertSortDialog;
+import com.propertyfinder.testapplication.features.property_list.sorting.SortAdapter;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 public class PropertyListActivity extends BaseActivity {
     private PropertyListActivityComponent component;
@@ -32,6 +29,9 @@ public class PropertyListActivity extends BaseActivity {
     @BindView(R.id.rcvList)
     RecyclerView recyclerView;
 
+    @BindView(R.id.fabSort)
+    FloatingActionButton fabSort;
+
 
     @Inject
     PropertyListPresenter propertyListPresenter;
@@ -39,6 +39,7 @@ public class PropertyListActivity extends BaseActivity {
     PropertyAdapter propertyAdapter;
     @Inject
     RecyclerView.LayoutManager layoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,12 @@ public class PropertyListActivity extends BaseActivity {
 
         initUI();
         propertyListPresenter.loadProperty();
+        fabSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                propertyListPresenter.clickSort();
+            }
+        });
     }
 
     private void initUI() {
@@ -77,5 +84,20 @@ public class PropertyListActivity extends BaseActivity {
     public void showLoading(boolean show) {
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
         recyclerView.setVisibility(!show ? View.VISIBLE : View.GONE);
+    }
+
+    public void showSortDialog() {
+        final SortAdapter sortAdapter = new SortAdapter(this);
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.choose_sort_type)
+                .setAdapter(sortAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        propertyListPresenter.loadProperty(sortAdapter.getItem(which));
+                    }
+                })
+                .create();
+
+        alertDialog.show();
     }
 }
