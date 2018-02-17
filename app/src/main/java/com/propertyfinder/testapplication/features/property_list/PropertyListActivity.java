@@ -34,13 +34,11 @@ public class PropertyListActivity extends BaseActivity {
 
 
     @Inject
-    PropertyService propertyService;
+    PropertyListPresenter propertyListPresenter;
     @Inject
     PropertyAdapter propertyAdapter;
     @Inject
     RecyclerView.LayoutManager layoutManager;
-    @Inject
-    PropertyDataManager propertyDataManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,39 +47,12 @@ public class PropertyListActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         initUI();
-        getProperties();
+        propertyListPresenter.loadProperty();
     }
 
     private void initUI() {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(propertyAdapter);
-    }
-
-    private void getProperties() {
-        propertyDataManager.getUsersRepositories(null, 0)
-                .subscribe(new Observer<ImmutableList<Property>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        showLoading(true);
-                    }
-
-                    @Override
-                    public void onNext(ImmutableList<Property> propertyList) {
-                        showLoading(false);
-                        setList(propertyList);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        showLoading(false);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        showLoading(false);
-                    }
-                });
-
     }
 
     @Override
@@ -105,6 +76,6 @@ public class PropertyListActivity extends BaseActivity {
 
     public void showLoading(boolean show) {
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
-//        recyclerView.setVisibility(!show ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(!show ? View.VISIBLE : View.GONE);
     }
 }

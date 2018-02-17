@@ -14,7 +14,9 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-
+/**
+ * Manipulating Property data
+ * */
 public class PropertyDataManager {
     PropertyService mPropertyService;
 
@@ -22,6 +24,9 @@ public class PropertyDataManager {
         mPropertyService = propertyService;
     }
 
+    /**
+     * Convert data from response to the data that app needs
+     * */
     public Observable<ImmutableList<Property>> getUsersRepositories(String order, int pageNumber) {
         return mPropertyService.getPropertyList(order, pageNumber)
                 .map(new Function<PropertyList, ImmutableList<Property>>() {

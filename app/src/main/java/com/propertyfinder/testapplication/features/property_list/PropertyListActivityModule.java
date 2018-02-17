@@ -37,4 +37,10 @@ public class PropertyListActivityModule {
         return new PropertyDataManager(propertyService);
     }
 
+    @Provides
+    @PropertyListActivityScope
+    public PropertyListPresenter propertyListPresenter(PropertyListActivity propertyListActivity, PropertyDataManager propertyDataManager){
+        return new PropertyListPresenter(propertyListActivity, propertyDataManager);
+    }
+
 }
