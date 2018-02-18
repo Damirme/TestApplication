@@ -12,16 +12,21 @@ import com.propertyfinder.testapplication.R;
 import com.propertyfinder.testapplication.core.BaseActivity;
 import com.propertyfinder.testapplication.core.application.MyApplication;
 import com.propertyfinder.testapplication.data.model.Property;
-import com.propertyfinder.testapplication.features.property_list.sorting.AlertSortDialog;
+import com.propertyfinder.testapplication.data.model.SortType;
 import com.propertyfinder.testapplication.features.property_list.sorting.SortAdapter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PropertyListActivity extends BaseActivity implements PropertyListContract.View{
+public class PropertyListActivity extends BaseActivity implements PropertyListContract.View, PropertyAdapter.OnFooterAppearListener {
     private PropertyListActivityComponent component;
+
+    int pageNumber = 0;
+    SortType sortType;
 
     @BindView(R.id.progressBar)
     View progressBar;
@@ -60,17 +65,6 @@ public class PropertyListActivity extends BaseActivity implements PropertyListCo
     private void initUI() {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(propertyAdapter);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
     }
 
     @Override
@@ -100,7 +94,9 @@ public class PropertyListActivity extends BaseActivity implements PropertyListCo
                 .setAdapter(sortAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        propertyListPresenter.getSotedList(sortAdapter.getItem(which));
+                        sortType = sortAdapter.getItem(which);
+                        pageNumber = 0;
+                        propertyListPresenter.getSortedList(sortType);
                     }
                 })
                 .create();
@@ -129,12 +125,17 @@ public class PropertyListActivity extends BaseActivity implements PropertyListCo
     }
 
     @Override
-    public void showList(ImmutableList<Property> propertyList) {
+    public void showList(List<Property> propertyList) {
         propertyAdapter.setList(propertyList);
     }
 
     @Override
-    public void showMore(ImmutableList<Property> propertyList) {
+    public void showMore(List<Property> propertyList) {
         propertyAdapter.addList(propertyList);
+    }
+
+    @Override
+    public void OnFooterAppear() {
+        propertyListPresenter.getMoreList(sortType, ++pageNumber);
     }
 }

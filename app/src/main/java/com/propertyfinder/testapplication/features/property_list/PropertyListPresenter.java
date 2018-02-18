@@ -1,9 +1,12 @@
 package com.propertyfinder.testapplication.features.property_list;
 
-import com.google.common.collect.ImmutableList;
+import android.util.Log;
+
 import com.propertyfinder.testapplication.data.api.PropertyDataManager;
 import com.propertyfinder.testapplication.data.model.Property;
 import com.propertyfinder.testapplication.data.model.SortType;
+
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -19,19 +22,26 @@ public class PropertyListPresenter implements PropertyListContract.Presenter {
         this.propertyDataManager = propertyDataManager;
     }
 
-    private void loadProperty(String order, int pageNumber) {
-        propertyListView.showLoading();
+    private void loadProperty(String order, final int pageNumber) {
+        Log.e("PRESENTER", "order: " + order + ", pageNumber: " + pageNumber);
+        if (pageNumber == 0)
+            propertyListView.showLoading();
         propertyDataManager.getUsersRepositories(order, pageNumber)
-                .subscribe(new Observer<ImmutableList<Property>>() {
+                .subscribe(new Observer<List<Property>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        propertyListView.showLoading();
+                        if (pageNumber == 0)
+                            propertyListView.showLoading();
                     }
 
                     @Override
-                    public void onNext(ImmutableList<Property> propertyList) {
-                        propertyListView.hideLoading();
-                        propertyListView.showList(propertyList);
+                    public void onNext(List<Property> propertyList) {
+                        if (pageNumber == 0) {
+                            propertyListView.hideLoading();
+                            propertyListView.showList(propertyList);
+                        } else {
+                            propertyListView.showMore(propertyList);
+                        }
                     }
 
                     @Override
@@ -57,12 +67,13 @@ public class PropertyListPresenter implements PropertyListContract.Presenter {
     }
 
     @Override
-    public void getSotedList(SortType sortType) {
+    public void getSortedList(SortType sortType) {
         loadProperty(sortType.getCode(), 0);
     }
 
     @Override
-    public void getMoreList() {
-
+    public void getMoreList(SortType sortType, int pageNumber) {
+        loadProperty(sortType != null ? sortType.getCode() : null, pageNumber);
     }
+
 }

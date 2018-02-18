@@ -50,9 +50,9 @@ public class NetworkModule {
         return new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                Timber.tag("network").d(message);
+                Timber.tag("PROPERTYFINDER").d(message);
             }
         })
-                .setLevel(HttpLoggingInterceptor.Level.BODY);
+                .setLevel(HttpLoggingInterceptor.Level.BASIC);
     }
 }

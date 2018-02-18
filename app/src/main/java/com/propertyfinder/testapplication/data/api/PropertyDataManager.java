@@ -1,22 +1,21 @@
 package com.propertyfinder.testapplication.data.api;
 
-import android.util.Log;
-
-import com.google.common.collect.ImmutableList;
 import com.propertyfinder.testapplication.core.network.PropertyService;
 import com.propertyfinder.testapplication.data.api.response.PropertyList;
 import com.propertyfinder.testapplication.data.api.response.PropertyResponse;
 import com.propertyfinder.testapplication.data.model.Property;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+
 /**
  * Manipulating Property data
- * */
+ */
 public class PropertyDataManager {
     PropertyService mPropertyService;
 
@@ -26,22 +25,22 @@ public class PropertyDataManager {
 
     /**
      * Convert data from response to the data that app needs
-     * */
-    public Observable<ImmutableList<Property>> getUsersRepositories(String order, int pageNumber) {
+     */
+    public Observable<List<Property>> getUsersRepositories(String order, int pageNumber) {
         return mPropertyService.getPropertyList(order, pageNumber)
-                .map(new Function<PropertyList, ImmutableList<Property>>() {
+                .map(new Function<PropertyList, List<Property>>() {
                     @Override
-                    public ImmutableList<Property> apply(PropertyList propertyListResponse) {
-                        final ImmutableList.Builder<Property> listBuilder = ImmutableList.builder();
+                    public List<Property> apply(PropertyList propertyListResponse) {
+                        List<Property> properties = new ArrayList<>();
                         for (PropertyResponse propertyResponse : propertyListResponse.getResult()) {
                             Property property = new Property();
                             property.id = propertyResponse.getId();
                             property.imageUrl = propertyResponse.getThumbnail();
                             property.bathroomCount = propertyResponse.getBathrooms();
                             property.bedroomCount = propertyResponse.getBedrooms();
-                            listBuilder.add(property);
+                            properties.add(property);
                         }
-                        return listBuilder.build();
+                        return properties;
                     }
                 })
                 .subscribeOn(Schedulers.io())

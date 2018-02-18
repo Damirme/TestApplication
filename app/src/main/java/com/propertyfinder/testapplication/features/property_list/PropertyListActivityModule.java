@@ -1,6 +1,5 @@
 package com.propertyfinder.testapplication.features.property_list;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +8,7 @@ import com.propertyfinder.testapplication.core.network.PropertyService;
 import com.propertyfinder.testapplication.data.api.PropertyDataManager;
 import com.propertyfinder.testapplication.features.property_list.sorting.AlertSortDialog;
 import com.propertyfinder.testapplication.features.property_list.sorting.SortAdapter;
+import com.squareup.picasso.Picasso;
 
 import dagger.Module;
 import dagger.Provides;
@@ -31,26 +31,32 @@ public class PropertyListActivityModule {
 
     @Provides
     @PropertyListActivityScope
-    public RecyclerView.LayoutManager layoutManager(PropertyListActivity context){
+    public RecyclerView.LayoutManager layoutManager(PropertyListActivity context) {
         return new LinearLayoutManager(context);
     }
 
     @Provides
     @PropertyListActivityScope
-    public PropertyDataManager propertyDataManager(PropertyService propertyService){
+    public PropertyDataManager propertyDataManager(PropertyService propertyService) {
         return new PropertyDataManager(propertyService);
     }
 
     @Provides
     @PropertyListActivityScope
-    public PropertyListContract.Presenter propertyListPresenter(PropertyListActivity propertyListActivity, PropertyDataManager propertyDataManager){
+    public PropertyListContract.Presenter propertyListPresenter(PropertyListActivity propertyListActivity, PropertyDataManager propertyDataManager) {
         return new PropertyListPresenter(propertyListActivity, propertyDataManager);
     }
 
     @Provides
     @PropertyListActivityScope
-    public AlertSortDialog alertSortDialog(Context context, SortAdapter adapter){
+    public AlertSortDialog alertSortDialog(Context context, SortAdapter adapter) {
         return new AlertSortDialog(context, adapter);
+    }
+
+    @Provides
+    @PropertyListActivityScope
+    public PropertyAdapter propertyAdapter(PropertyListActivity propertyListActivity, Picasso picasso) {
+        return new PropertyAdapter(propertyListActivity, picasso);
     }
 
 }
