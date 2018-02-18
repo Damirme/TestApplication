@@ -1,7 +1,5 @@
 package com.propertyfinder.testapplication.features.property_list;
 
-import android.util.Log;
-
 import com.propertyfinder.testapplication.data.api.PropertyDataManager;
 import com.propertyfinder.testapplication.data.model.Property;
 import com.propertyfinder.testapplication.data.model.SortType;
@@ -15,6 +13,7 @@ import timber.log.Timber;
 public class PropertyListPresenter implements PropertyListContract.Presenter {
     private PropertyListContract.View propertyListView;
     private PropertyDataManager propertyDataManager;
+    int pageNumber;
 
     public PropertyListPresenter(PropertyListContract.View propertyListView,
                                  PropertyDataManager propertyDataManager) {
@@ -22,11 +21,10 @@ public class PropertyListPresenter implements PropertyListContract.Presenter {
         this.propertyDataManager = propertyDataManager;
     }
 
-    private void loadProperty(String order, final int pageNumber) {
-        Log.e("PRESENTER", "order: " + order + ", pageNumber: " + pageNumber);
+    private void loadProperty(SortType sortType) {
         if (pageNumber == 0)
             propertyListView.showLoading();
-        propertyDataManager.getUsersRepositories(order, pageNumber)
+        propertyDataManager.getProperties(sortType != null ? sortType.getCode() : null, pageNumber)
                 .subscribe(new Observer<List<Property>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -63,17 +61,20 @@ public class PropertyListPresenter implements PropertyListContract.Presenter {
 
     @Override
     public void getList() {
-        loadProperty(null, 0);
+        pageNumber = 0;
+        loadProperty(null);
     }
 
     @Override
     public void getSortedList(SortType sortType) {
-        loadProperty(sortType.getCode(), 0);
+        pageNumber = 0;
+        loadProperty(sortType);
     }
 
     @Override
     public void getMoreList(SortType sortType, int pageNumber) {
-        loadProperty(sortType != null ? sortType.getCode() : null, pageNumber);
+        this.pageNumber = pageNumber;
+        loadProperty(sortType);
     }
 
 }

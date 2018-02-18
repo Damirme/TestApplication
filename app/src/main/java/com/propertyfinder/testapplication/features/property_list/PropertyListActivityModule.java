@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.propertyfinder.testapplication.core.network.PropertyService;
 import com.propertyfinder.testapplication.data.api.PropertyDataManager;
-import com.propertyfinder.testapplication.features.property_list.sorting.AlertSortDialog;
 import com.propertyfinder.testapplication.features.property_list.sorting.SortAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -49,8 +48,8 @@ public class PropertyListActivityModule {
 
     @Provides
     @PropertyListActivityScope
-    public AlertSortDialog alertSortDialog(Context context, SortAdapter adapter) {
-        return new AlertSortDialog(context, adapter);
+    public SortAdapter sortAdapter(PropertyListActivity context) {
+        return new SortAdapter(context);
     }
 
     @Provides

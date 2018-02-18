@@ -3,7 +3,6 @@ package com.propertyfinder.testapplication.features.property_list;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.google.common.collect.ImmutableList;
 import com.propertyfinder.testapplication.data.model.Property;
 import com.propertyfinder.testapplication.features.property_list.item.FooterViewHolder;
 import com.propertyfinder.testapplication.features.property_list.item.PropertyViewHolder;
@@ -19,6 +18,7 @@ public class PropertyAdapter extends RecyclerView.Adapter {
     }
 
     List<Property> list;
+    boolean showLoader = true;
     Picasso picasso;
     OnFooterAppearListener onLoadMoreAppear;
 
@@ -58,13 +58,13 @@ public class PropertyAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return list.size() > 0 ? list.size() + 1 : list.size(); //if list is not empty add a footer
+        return list.size() > 0 && showLoader ? list.size() + 1 : list.size(); //if list is not empty add a footer
     }
 
 
     @Override
     public int getItemViewType(int position) {
-        if (position == list.size() && position != 0) {
+        if (position == list.size() && list.size() != 0) { //don't show the loader when list is empty
             return ViewType.LOADER_VIEW;
         }
         return ViewType.ITEM_VIEW;
@@ -77,6 +77,7 @@ public class PropertyAdapter extends RecyclerView.Adapter {
 
     public void addList(List<Property> propertyList) {
         list.addAll(propertyList);
+        if (list.size() == 0) showLoader = false;
         notifyDataSetChanged();
     }
 }

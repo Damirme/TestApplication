@@ -44,6 +44,8 @@ public class PropertyListActivity extends BaseActivity implements PropertyListCo
     PropertyAdapter propertyAdapter;
     @Inject
     RecyclerView.LayoutManager layoutManager;
+    @Inject
+    SortAdapter sortAdapter;
 
 
     @Override
@@ -88,7 +90,6 @@ public class PropertyListActivity extends BaseActivity implements PropertyListCo
     }
 
     public void showSortDialog() {
-        final SortAdapter sortAdapter = new SortAdapter(this);
         AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.choose_sort_type)
                 .setAdapter(sortAdapter, new DialogInterface.OnClickListener() {

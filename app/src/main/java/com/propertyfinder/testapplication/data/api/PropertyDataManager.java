@@ -26,7 +26,7 @@ public class PropertyDataManager {
     /**
      * Convert data from response to the data that app needs
      */
-    public Observable<List<Property>> getUsersRepositories(String order, int pageNumber) {
+    public Observable<List<Property>> getProperties(String order, int pageNumber) {
         return mPropertyService.getPropertyList(order, pageNumber)
                 .map(new Function<PropertyList, List<Property>>() {
                     @Override
