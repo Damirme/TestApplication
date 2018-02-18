@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.propertyfinder.testapplication.data.api.response.PropertyResponse;
+import com.google.common.collect.ImmutableList;
 import com.propertyfinder.testapplication.data.model.Property;
 import com.propertyfinder.testapplication.features.property_list.item.PropertyViewHolder;
 import com.squareup.picasso.Picasso;
@@ -45,6 +45,11 @@ public class PropertyAdapter extends RecyclerView.Adapter {
 
     public void setList(List<Property> properties) {
         list = properties;
+        notifyDataSetChanged();
+    }
+
+    public void addList(ImmutableList<Property> propertyList) {
+        list.addAll(propertyList);
         notifyDataSetChanged();
     }
 }

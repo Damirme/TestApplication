@@ -20,7 +20,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PropertyListActivity extends BaseActivity {
+public class PropertyListActivity extends BaseActivity implements PropertyListContract.View{
     private PropertyListActivityComponent component;
 
     @BindView(R.id.progressBar)
@@ -34,7 +34,7 @@ public class PropertyListActivity extends BaseActivity {
 
 
     @Inject
-    PropertyListPresenter propertyListPresenter;
+    PropertyListContract.Presenter propertyListPresenter;
     @Inject
     PropertyAdapter propertyAdapter;
     @Inject
@@ -48,7 +48,7 @@ public class PropertyListActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         initUI();
-        propertyListPresenter.loadProperty();
+        propertyListPresenter.getList();
         fabSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +60,17 @@ public class PropertyListActivity extends BaseActivity {
     private void initUI() {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(propertyAdapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     @Override
@@ -77,10 +88,6 @@ public class PropertyListActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    public void setList(ImmutableList<Property> propertyList) {
-        propertyAdapter.setList(propertyList);
-    }
-
     public void showLoading(boolean show) {
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
         recyclerView.setVisibility(!show ? View.VISIBLE : View.GONE);
@@ -93,11 +100,41 @@ public class PropertyListActivity extends BaseActivity {
                 .setAdapter(sortAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        propertyListPresenter.loadProperty(sortAdapter.getItem(which));
+                        propertyListPresenter.getSotedList(sortAdapter.getItem(which));
                     }
                 })
                 .create();
 
         alertDialog.show();
+    }
+
+    @Override
+    public void showLoading() {
+        showLoading(true);
+    }
+
+    @Override
+    public void hideLoading() {
+        showLoading(false);
+    }
+
+    @Override
+    public void showNoResult() {
+
+    }
+
+    @Override
+    public void hideNoResult() {
+
+    }
+
+    @Override
+    public void showList(ImmutableList<Property> propertyList) {
+        propertyAdapter.setList(propertyList);
+    }
+
+    @Override
+    public void showMore(ImmutableList<Property> propertyList) {
+        propertyAdapter.addList(propertyList);
     }
 }

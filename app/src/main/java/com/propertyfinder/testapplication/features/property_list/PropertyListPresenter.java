@@ -9,54 +9,60 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
-public class PropertyListPresenter {
-    private PropertyListActivity propertyListActivity;
+public class PropertyListPresenter implements PropertyListContract.Presenter {
+    private PropertyListContract.View propertyListView;
     private PropertyDataManager propertyDataManager;
 
-    public PropertyListPresenter(PropertyListActivity propertyListActivity,
+    public PropertyListPresenter(PropertyListContract.View propertyListView,
                                  PropertyDataManager propertyDataManager) {
-        this.propertyListActivity = propertyListActivity;
+        this.propertyListView = propertyListView;
         this.propertyDataManager = propertyDataManager;
     }
 
-    public void loadProperty() {
-        loadProperty(null, 0);
-    }
-
-    public void loadProperty(SortType sortType) {
-        loadProperty(sortType.getCode(), 0);
-    }
-
-
     private void loadProperty(String order, int pageNumber) {
-        propertyListActivity.showLoading(true);
+        propertyListView.showLoading();
         propertyDataManager.getUsersRepositories(order, pageNumber)
                 .subscribe(new Observer<ImmutableList<Property>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        propertyListActivity.showLoading(true);
+                        propertyListView.showLoading();
                     }
 
                     @Override
                     public void onNext(ImmutableList<Property> propertyList) {
-                        propertyListActivity.showLoading(false);
-                        propertyListActivity.setList(propertyList);
+                        propertyListView.hideLoading();
+                        propertyListView.showList(propertyList);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        propertyListActivity.showLoading(false);
+                        propertyListView.hideLoading();
                         Timber.d(e);
                     }
 
                     @Override
                     public void onComplete() {
-                        propertyListActivity.showLoading(false);
+                        propertyListView.hideLoading();
                     }
                 });
     }
 
     public void clickSort() {
-        propertyListActivity.showSortDialog();
+        propertyListView.showSortDialog();
+    }
+
+    @Override
+    public void getList() {
+        loadProperty(null, 0);
+    }
+
+    @Override
+    public void getSotedList(SortType sortType) {
+        loadProperty(sortType.getCode(), 0);
+    }
+
+    @Override
+    public void getMoreList() {
+
     }
 }

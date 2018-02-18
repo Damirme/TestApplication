@@ -43,7 +43,7 @@ public class PropertyListActivityModule {
 
     @Provides
     @PropertyListActivityScope
-    public PropertyListPresenter propertyListPresenter(PropertyListActivity propertyListActivity, PropertyDataManager propertyDataManager){
+    public PropertyListContract.Presenter propertyListPresenter(PropertyListActivity propertyListActivity, PropertyDataManager propertyDataManager){
         return new PropertyListPresenter(propertyListActivity, propertyDataManager);
     }
 
